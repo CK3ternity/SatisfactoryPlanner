@@ -43,7 +43,7 @@ public class ListHandler {
 	}
 	private void addToFile(Item item) throws IOException {
 		String writeLine = String.format("%s,%d-", item.getName(), item.getItemsPerMinute());
-		for(CraftingItem cItem: item.getItems()) {
+		for(CraftingItem cItem: item.getCraftingItems()) {
 			writeLine += String.format("%s,%d,", cItem.getName(), cItem.getItemsNeeded());
 		}
 		
@@ -115,109 +115,5 @@ public class ListHandler {
 	}
 	
 	public static ListHandler getListHandler() { return listHandler; }
-}
-class Item {
-	private String name;
-	private int itemsMade;
-	private List<CraftingItem> items = new ArrayList<>();
-	
-	public Item(String name, int itemsMade) {
-		this.name = name;
-		this.itemsMade = itemsMade;
-	}
-	
-	public void addItem(CraftingItem i) {
-		this.items.add(i);
-	}
-	
-	public String getName() { return name; }
-	public int getItemsPerMinute() { return itemsMade; }
-	public List<CraftingItem> getItems() { return items; }
-	public void setItems(List<CraftingItem> items) { this.items = items; }
-	
-	@Override
-	public String toString() {
-		String str = "";
-		
-		str += this.getItemsPerMinute() + " " + this.getName() + " per Minute\n";
-		for(CraftingItem item: this.getItems()) {
-			str += "\t" + item.toString();
-		}
-		
-		return str;
-	}
-	
-	@Override
-	public boolean equals(Object other) {
-		if(other == null)
-			return false;
-		
-		if(!(other instanceof Item || other instanceof CraftingItem))
-			return false;
-		
-		if(other instanceof CraftingItem) {
-			CraftingItem otherCI = (CraftingItem) other;
-			
-			if(!this.getName().equals(otherCI.getName()))
-				return false;
-			
-			return true;
-		}
-		
-		Item otherItem = (Item) other;
-		
-		if(!this.getName().equals(otherItem.getName()))
-			return false;
-		
-		if(this.getItemsPerMinute() != otherItem.getItemsPerMinute())
-			return false;
-		
-		if(!this.getItems().equals(otherItem.getItems()))
-			return false;
-		
-		return true;
-	}
-}
-class CraftingItem {
-	private String name;
-	private int itemsNeeded;
-	
-	public CraftingItem(String name, int itemsNeeded) {
-		this.name = name;
-		this.itemsNeeded = itemsNeeded;
-	}
-
-	public String getName() { return name; }
-	public int getItemsNeeded() { return itemsNeeded; }
-	
-	@Override
-	public String toString() {
-		String str = "";
-		
-		str += this.getItemsNeeded() + " " + this.getName() + "(s) per Minute\n";
-		
-		return str;
-	}
-	
-	@Override
-	@SuppressWarnings("unlikely-arg-type")
-	public boolean equals(Object other) {
-		if(other == null)
-			return false;
-		
-		if(other instanceof Item)
-			return ((Item) other).equals(this);
-		
-		if(!(other instanceof CraftingItem))
-			return false;
-		
-		CraftingItem otherItem = (CraftingItem) other;
-		if(!this.getName().equals(otherItem.getName()))
-			return false;
-		
-		if(this.getItemsNeeded() != otherItem.getItemsNeeded())
-			return false;
-		
-		return true;
-	}
+	List<Item> getItems() { return items; }
 }
