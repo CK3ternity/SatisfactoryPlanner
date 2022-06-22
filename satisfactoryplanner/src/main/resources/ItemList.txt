@@ -1,0 +1,8 @@
+Smart Plating,2-Reinforced Iron Plate,2,Rotor,2
+Reinforced Iron Plate,5-Iron Plate,30,Screw,60
+Iron Plate,20-Iron Ingot,30
+Iron Ingot,30-Iron Ore,30
+Iron Ore,120
+Screw,40-Iron Rod,10
+Iron Rod,15-Iron Ingot,15
+Rotor,4-Iron Rod,5,Screw,100

@@ -10,15 +10,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListHandler {
-	private static ListHandler listHandler = new ListHandler();
+public class ListManager {
+	private static ListManager listManager = new ListManager();
 	private static File file;
 	private static File backup;
 	private static List<Item> items;
 	private static BufferedReader reader;
 	private static BufferedWriter writer;
 	
-	private ListHandler() { init(); }
+	private ListManager() { init(); }
 	
 	private void init() {
 		file = new File("src/main/resources/ItemList.txt");
@@ -72,6 +72,11 @@ public class ListHandler {
 		String[] basicInfo = separateBasicInfoFromList[0].split(",");
 		Item item = new Item(basicInfo[0], Integer.parseInt(basicInfo[1]));
 		
+		if(separateBasicInfoFromList.length == 1) {
+			item.setItems(new ArrayList<CraftingItem>());
+			return item;
+		}
+		
 		String[] listInfo = separateBasicInfoFromList[1].split(",");
 		ArrayList<CraftingItem> itemList = new ArrayList<>();
 		for(int i = 0; i < listInfo.length / 2; i++) {
@@ -108,12 +113,11 @@ public class ListHandler {
 			e.printStackTrace();
 		}
 	}
-	public Item addItem(String name, int itemsMade) {
+	public void addItem(String name, int itemsMade) {
 		Item i = new Item(name, itemsMade);
 		items.add(i);
-		return i;
 	}
 	
-	public static ListHandler getListHandler() { return listHandler; }
+	public static ListManager getListHandler() { return listManager; }
 	List<Item> getItems() { return items; }
 }
